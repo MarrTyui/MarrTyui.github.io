@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://marrtyui.github.io/sitemap.xml
