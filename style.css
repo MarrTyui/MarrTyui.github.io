@@ -112,3 +112,5 @@ details{background:var(--s1);border:1px solid var(--line);border-radius:.875rem;
 @media(max-width:860px){.cols,.steps{grid-template-columns:1fr}}
 @media(max-width:520px){.hero .wrap{padding-top:5rem;padding-bottom:3rem}.hero p{font-size:1.05rem}.card,.cols>div{padding:1.25rem}header .wrap{height:3.5rem}.page{padding-top:2.5rem}}
 @media(prefers-reduced-motion:reduce){.hero::before,.hero .eyebrow,.hero h1,.hero p,.hero .cta{animation:none}}
+
+.legal{max-width:52rem}.legal h2{font-size:1.4rem;margin:2.2rem 0 .6rem}.legal p,.legal li{color:var(--mu)}.legal a{color:var(--or);text-decoration:underline}

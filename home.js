@@ -1,5 +1,5 @@
 /* Équipe : remplacer par les vrais noms, rôles et photos */
-const TEAM=Array(10).fill(['Prénom Nom','Rôle']);
+const TEAM=[['Prénom Nom','Dirigeant'],['Prénom Nom','Dessinateur'],['Prénom Nom','Poseur'],['Prénom Nom','Poseur'],['Prénom Nom','Poseur'],['Prénom Nom','Soudeur'],['Prénom Nom','Soudeur'],['Prénom Nom','Soudeur'],['Prénom Nom','Soudeur'],['Prénom Nom','Soudeur']];
 const tm=document.getElementById('team');
 tm.innerHTML=TEAM.map(t=>`<div class="card rv"><div class="ph tall" role="img" aria-label="Photo de ${t[0]}">Photo</div><h3>${t[0]}</h3><p>${t[1]}</p></div>`).join('');
 document.querySelectorAll('.ar').forEach(b=>b.onclick=()=>tm.scrollBy({left:b.dataset.t*(tm.firstElementChild.offsetWidth+16),behavior:'smooth'}));
