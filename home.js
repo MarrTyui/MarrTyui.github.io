@@ -27,4 +27,4 @@ M.onclick=e=>{if(e.target===M)closeM();if(e.target.dataset&&e.target.tagName==='
 M.querySelector('.prev').onclick=()=>{pi--;show()};M.querySelector('.next').onclick=()=>{pi++;show()};
 addEventListener('keydown',e=>{if(M.hidden)return;if(e.key==='Escape')closeM();if(e.key==='ArrowLeft'){pi--;show()}if(e.key==='ArrowRight'){pi++;show()}});
 let sx=0;const st=M.querySelector('.mstage');st.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});st.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>40){pi+=d<0?1:-1;show()}});
-observe();
+observe();const mb=document.getElementById('more'),wk=document.querySelector('.works');if(mb)mb.onclick=()=>{const o=wk.classList.toggle('open');mb.setAttribute('aria-expanded',o);mb.textContent=o?'Afficher moins':'Afficher plus de réalisations';wk.querySelectorAll('.work:nth-child(n+4)').forEach(e=>e.classList.add('in'))};
