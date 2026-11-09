@@ -1,0 +1,3 @@
+DOSSIER PHOTOS DU SITE M2S
+Déposez ici les photos : le site se met à jour tout seul après chaque envoi sur GitHub (1 à 3 minutes).
+Formats : JPG, PNG, WEBP ou HEIC (iPhone). Les photos sont réduites automatiquement pour le site.

@@ -1,0 +1,8 @@
+UN DOSSIER PAR REALISATION, nommé avec la date puis un nom, par exemple : 2026-11-garde-corps-riom
+Les plus récentes (nom le plus grand) s'affichent en premier. La première photo (ordre alphabétique) sert de couverture.
+Dans chaque dossier, ajoutez les photos et, si vous voulez, un fichier texte nommé info.txt contenant :
+titre: Garde-corps de terrasse
+lieu: Riom
+type: Garde-corps
+description: Fabrication et pose d'un garde-corps en acier thermolaqué.
+(Sans info.txt, le titre est déduit du nom du dossier.) Le site affiche 6 réalisations, puis le bouton 'Afficher plus' montre les suivantes.

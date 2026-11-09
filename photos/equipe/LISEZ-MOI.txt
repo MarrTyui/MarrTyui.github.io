@@ -1,0 +1,2 @@
+UNE PHOTO PAR PERSONNE, nommée : Prénom Nom - Rôle.jpg  (exemple : Hugo Ternus - Dirigeant.jpg)
+Pour choisir l'ordre, commencez le nom par un numéro : 01 Hugo Ternus - Dirigeant.jpg. Format vertical conseillé.

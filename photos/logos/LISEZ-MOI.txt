@@ -1,0 +1,2 @@
+LOGOS DES ENTREPRISES CLIENTES : un fichier par logo, PNG à fond transparent ou SVG, nommé avec le nom de l'entreprise.
+Le bandeau défile automatiquement. Demandez l'accord des entreprises avant d'afficher leur logo.
