@@ -147,3 +147,9 @@ header nav a.btn{margin-top:1rem;text-align:center;border:0;color:#fff;padding:.
 
 #weld{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:55}
 body.weld-on{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}body.weld-on,body.weld-on *{cursor:crosshair!important}
+
+#cutfx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:57}
+.cutpiece{position:fixed;inset:0;pointer-events:none;z-index:56;filter:drop-shadow(0 .6rem 1.2rem rgba(0,0,0,.65));will-change:transform}
+.cutclip{position:absolute;inset:0;overflow:hidden}.cutwrap{position:absolute;left:0}
+.cutwrap *,.cutwrap *::before,.cutwrap *::after{animation:none!important;transition:none!important}
+body.cut-on{user-select:none;-webkit-user-select:none}body.cut-on,body.cut-on *{cursor:crosshair!important}
