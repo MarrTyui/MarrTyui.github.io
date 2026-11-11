@@ -153,3 +153,6 @@ body.weld-on{user-select:none;-webkit-user-select:none;-webkit-touch-callout:non
 .cutclip{position:absolute;inset:0;overflow:hidden}.cutwrap{position:absolute;left:0}
 .cutwrap *,.cutwrap *::before,.cutwrap *::after{animation:none!important;transition:none!important}
 body.cut-on{user-select:none;-webkit-user-select:none}body.cut-on,body.cut-on *{cursor:crosshair!important}
+
+#m2stoast{position:fixed;left:50%;bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));z-index:58;transform:translate(-50%,1rem);opacity:0;pointer-events:none;max-width:calc(100vw - 2rem);padding:.7rem 1.2rem;border-radius:999px;background:rgba(22,22,23,.92);border:1px solid var(--line);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font:400 .875rem/1.4 Inter,system-ui,-apple-system,sans-serif;color:var(--mu);text-align:center;transition:opacity .4s,transform .4s}
+#m2stoast.on{opacity:1;transform:translate(-50%,0)}#m2stoast b{color:var(--tx);font-weight:600}#m2stoast i{color:var(--or);font-style:normal;margin-right:.45rem}

@@ -1,3 +1,4 @@
+window.m2sToast=function(h){let t=document.getElementById('m2stoast');if(!t){t=document.createElement('div');t.id='m2stoast';t.setAttribute('role','status');document.documentElement.appendChild(t)}clearTimeout(t._h);t.innerHTML='<i>✦</i>'+h;t.classList.add('on');t._h=setTimeout(()=>t.classList.remove('on'),4200)};
 window.MEDIA=fetch('/data/media.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);
 const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12}):null;function observe(){document.querySelectorAll('.rv:not(.in)').forEach(e=>io?io.observe(e):e.classList.add('in'))}observe();const pg=document.getElementById('prog'),hd=document.querySelector('header');function sc(){const m=document.documentElement.scrollHeight-innerHeight;pg.style.width=(m>0?scrollY/m*100:0)+'%';hd.classList.toggle('sc',scrollY>8)}addEventListener('scroll',sc,{passive:true});sc();(function(){const h=document.querySelector('header'),b=h&&h.querySelector('.burger');if(!b)return;const set=o=>{h.classList.toggle('open',o);b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Fermer le menu':'Ouvrir le menu')};b.onclick=()=>set(!h.classList.contains('open'));h.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>set(false)));addEventListener('keydown',e=>{if(e.key==='Escape')set(false)});matchMedia('(min-width:861px)').addEventListener('change',()=>set(false))})();
 /* Effet « soudure » : maintenir le clic (ou appui long) et glisser. Étincelles + cordon qui refroidit puis disparaît. */
@@ -19,7 +20,7 @@ function addPoint(first){
   for(let i=1;i<=n;i++){const f=i/n;stamps.push({x:lx+(X-lx)*f,y:ly+(Y-ly)*f,t,r:4.3+Math.random()*1.7})}
   lx=X;ly=Y}
 function start(){on=true;document.body.classList.add('weld-on');const s=getSelection();s&&s.removeAllRanges();addPoint(true);kick()}
-function stop(){down=false;on=false;lx=null;clearTimeout(timer);document.body.classList.remove('weld-on')}
+let firstW=true;function stop(){if(on&&firstW){firstW=false;setTimeout(()=>window.m2sToast&&m2sToast('<b>Première soudure</b> réussie : bravo, vous avez la main !'),300)}down=false;on=false;lx=null;clearTimeout(timer);document.body.classList.remove('weld-on')}
 addEventListener('pointerdown',e=>{
   if(e.button!==0||e.ctrlKey||(e.target.closest&&e.target.closest(SKIP)))return;
   down=true;touch=e.pointerType==='touch';px=sx=e.clientX;py=sy=e.clientY;on=false;
@@ -86,7 +87,7 @@ function inter(p1,p2,p3,p4){const d=(p2.x-p1.x)*(p4.y-p3.y)-(p2.y-p1.y)*(p4.x-p3
   const t=((p3.x-p1.x)*(p4.y-p3.y)-(p3.y-p1.y)*(p4.x-p3.x))/d,u=((p3.x-p1.x)*(p2.y-p1.y)-(p3.y-p1.y)*(p2.x-p1.x))/d;
   return t>=0&&t<=1&&u>=0&&u<=1?{x:p1.x+t*(p2.x-p1.x),y:p1.y+t*(p2.y-p1.y)}:null}
 function endCut(){cutting=false;body.classList.remove('cut-on');mute=performance.now()+500}
-function closeShape(poly){endCut();flashes.push({poly,t:performance.now()});drop(poly)}
+let firstC=true;function closeShape(poly){endCut();flashes.push({poly,t:performance.now()});if(firstC){firstC=false;setTimeout(()=>window.m2sToast&&m2sToast('<b>Première découpe</b> validée : nette et précise, bravo !'),900)}drop(poly)}
 function check(){const n=pts.length;if(n<6)return;const a=pts[n-2],b=pts[n-1];
   for(let i=0;i<n-3;i++){const ip=inter(pts[i],pts[i+1],a,b);if(ip){const poly=[ip,...pts.slice(i+1,n-1)];if(area(poly)>=MIN){closeShape(poly);return}}}
   const s=pts[0];if(n>14&&Math.hypot(b.x-s.x,b.y-s.y)<16&&area(pts)>=MIN)closeShape(pts.slice())}
