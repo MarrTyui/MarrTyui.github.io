@@ -156,3 +156,23 @@ body.cut-on{user-select:none;-webkit-user-select:none}body.cut-on,body.cut-on *{
 
 #m2stoast{position:fixed;left:50%;bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));z-index:58;transform:translate(-50%,1rem);opacity:0;pointer-events:none;max-width:calc(100vw - 2rem);padding:.7rem 1.2rem;border-radius:999px;background:rgba(22,22,23,.92);border:1px solid var(--line);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font:400 .875rem/1.4 Inter,system-ui,-apple-system,sans-serif;color:var(--mu);text-align:center;transition:opacity .4s,transform .4s}
 #m2stoast.on{opacity:1;transform:translate(-50%,0)}#m2stoast b{color:var(--tx);font-weight:600}#m2stoast i{color:var(--or);font-style:normal;margin-right:.45rem}
+
+/* Palette : anthracite + crème / ambre / orange brûlé */
+:root{--tx:#FEF3E2;--amber:#F4AE52;--or2:#E88F34;--or:#D4621A;--rust:#A94A14}
+::selection{background:rgba(244,174,82,.35);color:#fff}
+.btn{background:linear-gradient(135deg,var(--amber),var(--or));color:#1b1109}
+.btn:hover{background:linear-gradient(135deg,#f8bf70,#e2701f)}
+.btn.ghost{background:transparent;color:var(--tx)}.btn.ghost:hover{background:transparent;border-color:var(--amber)}
+.hero{background:radial-gradient(ellipse at 82% 4%,rgba(244,174,82,.22) 0,rgba(212,98,26,.08) 30%,transparent 58%),radial-gradient(ellipse at 8% 100%,rgba(254,243,226,.05) 0,transparent 50%),var(--bg)}
+.st{color:var(--amber)}
+.hero::before{background:radial-gradient(circle,rgba(244,174,82,.2),transparent 60%)}
+.ph::before{background:radial-gradient(circle,rgba(244,174,82,.2),transparent 65%)}
+.eyebrow,.team p,.steps b,#m2stoast i{color:var(--amber)}
+.stats b{background:linear-gradient(135deg,var(--amber),var(--or));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sec-h h2::after,#prog{background:linear-gradient(90deg,var(--amber),var(--or))}
+.cols li::before{background:linear-gradient(135deg,var(--amber),var(--or))}
+.card:hover{border-color:var(--or2)}.logo i{border-color:var(--or);color:var(--amber)}
+.band{background:linear-gradient(110deg,#F4AE52 0%,#E9893A 45%,#D4621A 100%);color:#1b1109}
+.band .btn{background:#0e0e10;color:var(--tx)}.band .btn:hover{background:#000}
+.lg.real{background:#FEF3E2}
+@media(max-width:860px){header nav a.btn{color:#1b1109}}

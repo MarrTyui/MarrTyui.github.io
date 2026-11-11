@@ -11,7 +11,7 @@ size();addEventListener('resize',size);
 const SKIP='a,button,input,select,textarea,summary,label,video,.modal,.burger';
 let down=false,on=false,touch=false,px=0,py=0,sx=0,sy=0,lx=null,ly=0,timer=0,raf=0,last=0;
 const stamps=[],sparks=[],LIFE=3400;
-const KEYS=[[0,[255,248,220]],[.35,[255,172,62]],[.9,[226,82,26]],[1.7,[84,48,38]],[2.4,[80,80,86]]];
+const KEYS=[[0,[254,243,226]],[.35,[244,174,82]],[.9,[212,98,26]],[1.7,[84,52,38]],[2.4,[80,80,86]]];
 function color(a){for(let i=1;i<KEYS.length;i++){if(a<=KEYS[i][0]){const k0=KEYS[i-1],k1=KEYS[i],f=(a-k0[0])/(k1[0]-k0[0]);return k0[1].map((v,j)=>Math.round(v+(k1[1][j]-v)*f))}}return KEYS[KEYS.length-1][1]}
 function addPoint(first){
   const X=px,Y=py+scrollY,t=performance.now();
@@ -42,7 +42,7 @@ function drawBead(now){
     const age=(now-s.t)/1000;if(age<0)continue;
     const c=color(age),al=age<2.4?1:Math.max(0,1-(age-2.4)/1);
     if(age<.6){const g=ctx.createRadialGradient(s.x,s.y-scrollY,0,s.x,s.y-scrollY,s.r*4.5);
-      g.addColorStop(0,`rgba(255,190,90,${.38*(1-age/.6)*al})`);g.addColorStop(1,'rgba(255,90,20,0)');
+      g.addColorStop(0,`rgba(244,174,82,${.38*(1-age/.6)*al})`);g.addColorStop(1,'rgba(212,98,26,0)');
       ctx.globalCompositeOperation='lighter';ctx.fillStyle=g;ctx.beginPath();ctx.arc(s.x,s.y-scrollY,s.r*4.5,0,6.3);ctx.fill();ctx.globalCompositeOperation='source-over'}
     ctx.fillStyle=`rgba(${c[0]},${c[1]},${c[2]},${al})`;ctx.beginPath();ctx.arc(s.x,s.y-scrollY,s.r,0,6.3);ctx.fill();
     if(age>.5){ctx.strokeStyle=`rgba(255,255,255,${Math.min(.22,(age-.5)*.2)*al})`;ctx.lineWidth=1;ctx.beginPath();ctx.arc(s.x,s.y-scrollY,s.r*.7,Math.PI*.95,Math.PI*1.85);ctx.stroke()}
@@ -53,13 +53,13 @@ function drawSparks(dt){
     const s=sparks[i];s.age+=dt/60;if(s.age>s.max){sparks.splice(i,1);continue}
     s.ox=s.x;s.oy=s.y;s.vy+=.3*dt;s.vx*=.99;s.x+=s.vx*dt;s.y+=s.vy*dt;
     if(s.y>s.fy&&s.vy>0&&s.b<2){s.vy*=-.38;s.vx*=.75;s.b++;s.y=s.fy}
-    const r=s.age/s.max,col=r<.25?'255,248,214':r<.55?'255,210,74':r<.8?'255,138,42':'224,67,26';
+    const r=s.age/s.max,col=r<.25?'254,243,226':r<.55?'244,174,82':r<.8?'232,143,52':'212,98,26';
     ctx.strokeStyle=`rgba(${col},${(1-r*r)*(.65+Math.random()*.35)})`;ctx.lineWidth=s.w;
     ctx.beginPath();ctx.moveTo(s.ox,s.oy);ctx.lineTo(s.x,s.y);ctx.stroke()}
   ctx.globalCompositeOperation='source-over'}
 function drawGlow(){
   const f=.8+Math.random()*.3,g=ctx.createRadialGradient(px,py,0,px,py,46*f);
-  g.addColorStop(0,'rgba(255,252,240,.95)');g.addColorStop(.12,'rgba(255,214,140,.6)');g.addColorStop(.4,'rgba(255,110,30,.22)');g.addColorStop(1,'rgba(255,90,20,0)');
+  g.addColorStop(0,'rgba(255,252,240,.95)');g.addColorStop(.12,'rgba(244,174,82,.6)');g.addColorStop(.4,'rgba(212,98,26,.22)');g.addColorStop(1,'rgba(212,98,26,0)');
   ctx.globalCompositeOperation='lighter';ctx.fillStyle=g;ctx.beginPath();ctx.arc(px,py,46*f,0,6.3);ctx.fill();
   ctx.fillStyle='rgba(200,225,255,.9)';ctx.beginPath();ctx.arc(px,py,2.6*f,0,6.3);ctx.fill();ctx.globalCompositeOperation='source-over'}
 function kick(){if(!raf){last=performance.now();raf=requestAnimationFrame(tick)}}
@@ -128,7 +128,7 @@ function drawTrails(now){
   for(const tr of trails)for(let i=1;i<tr.length;i++){
     const a=tr[i-1],b=tr[i],age=(now-b.t)/1000,hot=Math.max(0,1-age/.4),cool=Math.max(0,1-age/(LIFE/1000));if(cool<=0)continue;
     if(hot>0){ctx.strokeStyle=`rgba(90,170,255,${.35*hot})`;ctx.lineWidth=11;seg(a,b);ctx.strokeStyle=`rgba(255,255,255,${.95*hot})`;ctx.lineWidth=2.6;seg(a,b)}
-    ctx.strokeStyle=`rgba(255,120,45,${.55*cool*(1-hot*.5)})`;ctx.lineWidth=1.6;seg(a,b)}
+    ctx.strokeStyle=`rgba(212,98,26,${.55*cool*(1-hot*.5)})`;ctx.lineWidth=1.6;seg(a,b)}
   for(const f of flashes){const al=1-(now-f.t)/500;if(al<=0)continue;ctx.strokeStyle=`rgba(170,215,255,${al})`;ctx.lineWidth=3;ctx.beginPath();f.poly.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.stroke()}
   ctx.globalCompositeOperation='source-over'}
 function spark(){const a=Math.PI/2+(Math.random()-.5)*Math.PI*1.3,v=2+Math.random()*6;
@@ -136,7 +136,7 @@ function spark(){const a=Math.PI/2+(Math.random()-.5)*Math.PI*1.3,v=2+Math.rando
 function drawSparks(dt){ctx.globalCompositeOperation='lighter';ctx.lineCap='round';
   for(let i=sparks.length-1;i>=0;i--){const s=sparks[i];s.age+=dt/60;if(s.age>s.max){sparks.splice(i,1);continue}
     s.ox=s.x;s.oy=s.y;s.vy+=.32*dt;s.vx*=.99;s.x+=s.vx*dt;s.y+=s.vy*dt;
-    const r=s.age/s.max,c=r<.25?'255,248,230':r<.55?'255,200,90':r<.8?'255,140,45':'225,70,28';
+    const r=s.age/s.max,c=r<.25?'254,243,226':r<.55?'244,174,82':r<.8?'232,143,52':'212,98,26';
     ctx.strokeStyle=`rgba(${c},${(1-r*r)*(.6+Math.random()*.4)})`;ctx.lineWidth=s.w;ctx.beginPath();ctx.moveTo(s.ox,s.oy);ctx.lineTo(s.x,s.y);ctx.stroke()}
   ctx.globalCompositeOperation='source-over'}
 function drawTip(){const f=.85+Math.random()*.25,g=ctx.createRadialGradient(tip.x,tip.y,0,tip.x,tip.y,44*f);
