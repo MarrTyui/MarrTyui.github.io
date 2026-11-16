@@ -1,6 +1,6 @@
 window.m2sToast=function(h){let t=document.getElementById('m2stoast');if(!t){t=document.createElement('div');t.id='m2stoast';t.setAttribute('role','status');document.documentElement.appendChild(t)}clearTimeout(t._h);t.innerHTML='<i>✦</i>'+h;t.classList.add('on');t._h=setTimeout(()=>t.classList.remove('on'),4200)};
 window.MEDIA=fetch('/data/media.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);
-const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12}):null;function observe(){document.querySelectorAll('.rv:not(.in)').forEach(e=>io?io.observe(e):e.classList.add('in'))}observe();const pg=document.getElementById('prog'),hd=document.querySelector('header');function sc(){const m=document.documentElement.scrollHeight-innerHeight;pg.style.width=(m>0?scrollY/m*100:0)+'%';hd.classList.toggle('sc',scrollY>8)}addEventListener('scroll',sc,{passive:true});sc();(function(){const h=document.querySelector('header'),b=h&&h.querySelector('.burger');if(!b)return;const set=o=>{h.classList.toggle('open',o);b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Fermer le menu':'Ouvrir le menu')};b.onclick=()=>set(!h.classList.contains('open'));h.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>set(false)));addEventListener('keydown',e=>{if(e.key==='Escape')set(false)});matchMedia('(min-width:861px)').addEventListener('change',()=>set(false))})();
+const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12}):null;function observe(){document.querySelectorAll('.rv:not(.in)').forEach(e=>io?io.observe(e):e.classList.add('in'))}observe();const pg=document.getElementById('prog'),hd=document.querySelector('header');function sc(){const m=document.documentElement.scrollHeight-innerHeight;pg.style.transform='scaleX('+(m>0?scrollY/m:0)+')';hd.classList.toggle('sc',scrollY>8)}addEventListener('scroll',sc,{passive:true});sc();(function(){const h=document.querySelector('header'),b=h&&h.querySelector('.burger');if(!b)return;const set=o=>{h.classList.toggle('open',o);b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Fermer le menu':'Ouvrir le menu')};b.onclick=()=>set(!h.classList.contains('open'));h.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>set(false)));addEventListener('keydown',e=>{if(e.key==='Escape')set(false)});matchMedia('(min-width:861px)').addEventListener('change',()=>set(false))})();
 /* Effet « soudure » : maintenir le clic (ou appui long) et glisser. Étincelles + cordon qui refroidit puis disparaît. */
 (function(){
 if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
@@ -22,7 +22,7 @@ function addPoint(first){
 function start(){on=true;document.body.classList.add('weld-on');const s=getSelection();s&&s.removeAllRanges();addPoint(true);kick()}
 let firstW=true;function stop(){if(on&&firstW){firstW=false;setTimeout(()=>window.m2sToast&&m2sToast('<b>Première soudure</b> réussie : bravo, vous avez la main !'),300)}down=false;on=false;lx=null;clearTimeout(timer);document.body.classList.remove('weld-on')}
 addEventListener('pointerdown',e=>{
-  if(e.button!==0||e.ctrlKey||(e.target.closest&&e.target.closest(SKIP)))return;
+  if(e.button!==0||e.pointerType==='touch'||e.ctrlKey||document.documentElement.dataset.fx==='off'||(e.target.closest&&e.target.closest(SKIP)))return;
   down=true;touch=e.pointerType==='touch';px=sx=e.clientX;py=sy=e.clientY;on=false;
   clearTimeout(timer);timer=setTimeout(()=>{if(down&&!on)start()},touch?320:140)});
 addEventListener('pointermove',e=>{
@@ -93,7 +93,7 @@ function check(){const n=pts.length;if(n<6)return;const a=pts[n-2],b=pts[n-1];
   const s=pts[0];if(n>14&&Math.hypot(b.x-s.x,b.y-s.y)<16&&area(pts)>=MIN)closeShape(pts.slice())}
 function addPt(x,y){const l=pts[pts.length-1];if(Math.hypot(x-l.x,y-l.y)<3)return;pts.push({x,y,t:performance.now()});check()}
 addEventListener('pointerdown',e=>{
-  if(busy||e.button!==0||!e.ctrlKey)return;e.preventDefault();
+  if(busy||e.button!==0||!e.ctrlKey||document.documentElement.dataset.fx==='off')return;e.preventDefault();
   cutting=armed=true;tip={x:e.clientX,y:e.clientY};pts=[{x:tip.x,y:tip.y,t:performance.now()}];trails.push(pts);body.classList.add('cut-on');const s=getSelection();s&&s.removeAllRanges();kick()},true);
 addEventListener('pointermove',e=>{if(!cutting)return;if(!(e.buttons&3)||!e.ctrlKey){endCut();return}tip={x:e.clientX,y:e.clientY};addPt(tip.x,tip.y)},true);
 ['pointerup','pointercancel','blur'].forEach(ev=>addEventListener(ev,()=>{if(cutting)endCut();if(armed){armed=false;mute=performance.now()+400}},true));
@@ -150,3 +150,25 @@ function tick(now){raf=0;const t=performance.now(),dt=Math.min(3,(t-last)/16.67)
   drawTrails(t);drawSparks(dt);if(cutting)drawTip();
   if(cutting||trails.length||sparks.length||flashes.length)raf=requestAnimationFrame(tick)}
 })();
+
+/* Repères : section visible dans le menu, page courante */
+(function(){const L=[...document.querySelectorAll('header nav a')],M=new Map();
+ L.forEach(a=>{const id=(a.getAttribute('href')||'').split('#')[1],e=id&&document.getElementById(id);if(e)M.set(e,a)});
+ if(/^\/contact/.test(location.pathname)){const c=document.querySelector('header nav a.btn');c&&c.setAttribute('aria-current','page')}
+ const top=document.getElementById('accueil');if(!M.size||!('IntersectionObserver' in window))return;
+ const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;L.forEach(a=>a.removeAttribute('aria-current'));const a=M.get(e.target);a&&a.setAttribute('aria-current','location')}),{rootMargin:'-45% 0px -50% 0px'});
+ M.forEach((a,e)=>io.observe(e));top&&io.observe(top)})();
+
+/* Interrupteur des effets visuels (choix du visiteur, mémorisé sur son appareil) */
+(function(){const b=document.getElementById('fxbtn');if(!b)return;const K='m2s-fx';
+ const show=o=>{document.documentElement.dataset.fx=o?'off':'on';b.textContent='Effets visuels : '+(o?'désactivés':'activés');b.setAttribute('aria-pressed',String(!o))};
+ let off=false;try{off=localStorage.getItem(K)==='off'}catch(_){}show(off);
+ b.onclick=()=>{off=!off;show(off);try{off?localStorage.setItem(K,'off'):localStorage.removeItem(K)}catch(_){}}})();
+/* Formulaire de contact : état d'envoi et confirmation sans quitter la page */
+(function(){const f=document.querySelector('form[action*="web3forms"]');if(!f)return;
+ const btn=f.querySelector('button[type=submit]'),m=document.createElement('p');m.className='fmsg';m.setAttribute('role','status');m.hidden=true;f.appendChild(m);
+ f.addEventListener('submit',async e=>{e.preventDefault();const t=btn.textContent;btn.disabled=true;btn.textContent='Envoi en cours…';m.hidden=true;
+  try{const r=await fetch(f.action,{method:'POST',headers:{Accept:'application/json'},body:new FormData(f)}),j=await r.json();
+   if(!(r.ok&&j.success))throw 0;f.reset();m.className='fmsg ok';m.textContent='Merci ! Votre message a bien été envoyé. Nous vous répondons dès que possible.'}
+  catch(_){m.className='fmsg err';m.textContent='L’envoi a échoué. Réessayez, ou appelez-nous au 06 63 36 67 48.'}
+  m.hidden=false;btn.disabled=false;btn.textContent=t})})();
